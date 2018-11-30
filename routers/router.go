@@ -1,7 +1,9 @@
 package routers
 
 import (
+	"github.com/binlihpu/gin-blog/middeware/jwt"
 	"github.com/binlihpu/gin-blog/pkg/setting"
+	"github.com/binlihpu/gin-blog/routers/api"
 	"github.com/binlihpu/gin-blog/routers/api/v1"
 	"github.com/gin-gonic/gin"
 )
@@ -13,12 +15,10 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 	gin.SetMode(setting.BaseConf.RunMode)
 
-	// r.GET("/test", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"message": "test",
-	// 	})
-	// })
+	r.GET("/auth", api.GetAuth)
+
 	apiv1 := r.Group("/api/v1")
+	apiv1.Use(jwt.JWT())
 	apiv1.GET("/tags", v1.GetTags)
 	apiv1.POST("/tags", v1.AddTag)
 	apiv1.PUT("/tags/:id", v1.EditTag)

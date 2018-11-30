@@ -2,22 +2,27 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"log"
+	"syscall"
 
 	"github.com/binlihpu/gin-blog/pkg/setting"
 	"github.com/binlihpu/gin-blog/routers"
+	"github.com/fvbock/endless"
 )
 
 func main() {
-	router := routers.InitRouter()
+	endless.DefaultReadTimeOut = setting.ServerConf.ReadTimeout
+	endless.DefaultWriteTimeOut = setting.ServerConf.WriteTimeout
+	endless.DefaultMaxHeaderBytes = 1 << 20
+	endPoint := fmt.Sprintf(":%d", setting.ServerConf.HTTPPort)
+	server := endless.NewServer(endPoint, routers.InitRouter())
 
-	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", setting.ServerConf.HTTPPort),
-		Handler:        router,
-		ReadTimeout:    setting.ServerConf.ReadTimeout,
-		WriteTimeout:   setting.ServerConf.WriteTimeout,
-		MaxHeaderBytes: 1 << 20,
+	server.BeforeBegin = func(add string) {
+		log.Printf("Actual pid is %d", syscall.Getpid())
 	}
 
-	s.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Printf("Server err: %v", err)
+	}
 }

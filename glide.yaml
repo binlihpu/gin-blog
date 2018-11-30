@@ -22,3 +22,4 @@ import:
   - validation
 - package: github.com/dgrijalva/jwt-go
   version: ^3.2.0
+- package: github.com/fvbock/endless
