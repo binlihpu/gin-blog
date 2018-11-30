@@ -10,11 +10,13 @@ import:
   version: ^1.9.2
   subpackages:
   - dialects/mysql
-
-# fix
 - package: golang.org/x/sys
   subpackages:
   - unix
 - package: google.golang.org/appengine
   subpackages:
   - cloudsql
+- package: github.com/astaxie/beego
+  version: ^1.11.0
+  subpackages:
+  - validation

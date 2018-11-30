@@ -7,6 +7,7 @@ import (
 	"github.com/binlihpu/gin-blog/pkg/setting"
 )
 
+// GetPage GetPage
 func GetPage(c *gin.Context) int {
 	result := 0
 	page, _ := com.StrTo(c.Query("page")).Int()

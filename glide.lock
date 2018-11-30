@@ -1,6 +1,10 @@
-hash: e24751567ca653eb17b3f2106cee7f6ddc36c28f95f0415d1c6d57a17f1f4617
-updated: 2018-11-29T19:31:34.437305+08:00
+hash: 03f088ed1f5c26a26106902e2867941ada580c9f6948878d313252494ec12336
+updated: 2018-11-30T11:06:21.956012+08:00
 imports:
+- name: github.com/astaxie/beego
+  version: b0e2bbce2a45fcfda684b47968387fa0866ada06
+  subpackages:
+  - validation
 - name: github.com/gin-contrib/sse
   version: 22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae
 - name: github.com/gin-gonic/gin
@@ -48,5 +52,5 @@ imports:
 - name: gopkg.in/go-playground/validator.v8
   version: 5f1438d3fca68893a817e4a66806cea46a9e4ebf
 - name: gopkg.in/yaml.v2
-  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
+  version: 51d6538a90f86fe93ac480b35f37b2be17fef232
 testImports: []

@@ -16,6 +16,8 @@ var (
 	ServerConf *ServerConfig
 	// AppConf app相关配置
 	AppConf *AppConfig
+	// DBConf database相关配置
+	DBConf *DBConfig
 )
 
 // BaseConfig conf/app.ini中的基础配置信息
@@ -36,6 +38,16 @@ type AppConfig struct {
 	JwtSecret string
 }
 
+// DBConfig conf/app.ini中的database配置
+type DBConfig struct {
+	DBType      string
+	DBName      string
+	UserName    string
+	Password    string
+	DBHost      string
+	TablePrefix string
+}
+
 func init() {
 	var err error
 	Cfg, err = ini.Load("conf/app.ini")
@@ -46,6 +58,7 @@ func init() {
 	LoadBase()
 	LoadServer()
 	LoadApp()
+	LoadDB()
 }
 
 // LoadBase LoadBase
@@ -78,5 +91,21 @@ func LoadApp() {
 	AppConf = &AppConfig{
 		JwtSecret: sec.Key("JWT_SECRET").MustString("!@)*#)!@U#@*!@!)"),
 		PageSize:  sec.Key("PAGE_SIZE").MustInt(10),
+	}
+}
+
+// LoadDB LoadDB
+func LoadDB() {
+	sec, err := Cfg.GetSection("database")
+	if err != nil {
+		log.Fatal(2, "Fail to get section 'database': %v", err)
+	}
+	DBConf = &DBConfig{
+		DBType:      sec.Key("TYPE").String(),
+		DBName:      sec.Key("NAME").String(),
+		UserName:    sec.Key("USER").String(),
+		Password:    sec.Key("PASSWORD").String(),
+		DBHost:      sec.Key("HOST").String(),
+		TablePrefix: sec.Key("TABLE_PREFIX").String(),
 	}
 }
