@@ -23,3 +23,11 @@ import:
 - package: github.com/dgrijalva/jwt-go
   version: ^3.2.0
 - package: github.com/fvbock/endless
+- package: github.com/swaggo/swag
+  version: ^1.4.0
+  subpackages:
+  - cmd/swag
+- package: github.com/swaggo/gin-swagger
+  version: ^1.0.0
+  subpackages:
+  - swaggerFiles
